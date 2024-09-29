@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function MainPage() {
   //states for the form fields
@@ -8,16 +9,42 @@ function MainPage() {
   const [amountInSourceCurrency, SetAmountInSourceCurrency] = useState(0);
   const [amountInTargetCurrency, SetAmountInTargetCurrency] = useState(0);
 
+  const [currencyNames, setCurrencyNames] = useState([]);
+
   //handleSubmit method
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(
-      date,
-      setSourceCurrency,
-      targetCurrency,
-      amountInSourceCurrency
-    );
+    try {
+      const response = await axios.get("http://localhost:5000/convert", {
+        params: {
+          date,
+          sourceCurrency,
+          targetCurrency,
+          amountInSourceCurrency,
+        },
+      });
+
+      //TODO:set the rest
+      SetAmountInSourceCurrency(response.data);
+    } catch (err) {
+      console.error(err);
+    }
   };
+
+  //get all currency names
+  useEffect(() => {
+    const getCurrencyNames = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/getAllCurrencies"
+        );
+        setCurrencyNames(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getCurrencyNames();
+  }, []);
   return (
     <div>
       <h1 className="lg:mx-32 text-5xl font-bold text-green-500">
@@ -66,6 +93,11 @@ function MainPage() {
                 value={sourceCurrency}
               >
                 <option value="">Select source currency</option>
+                {Object.keys(currencyNames).map((currency) => (
+                  <option className="p-1" key={currency} value={currency}>
+                    {currencyNames[currency]}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="mb-4">
@@ -83,6 +115,11 @@ function MainPage() {
                 value={targetCurrency}
               >
                 <option value="">Select source currency</option>
+                {Object.keys(currencyNames).map((currency) => (
+                  <option className="p-1" key={currency} value={currency}>
+                    {currencyNames[currency]}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -109,6 +146,7 @@ function MainPage() {
           </form>
         </section>
       </div>
+      {amountInTargetCurrency}
     </div>
   );
 }
