@@ -57,7 +57,6 @@ function MainPage() {
         the value of your money in different currencies, this tool is here to
         help.
       </p>
-
       <div className="mt-5 flex items-center justify-center flex-col">
         <section className="w-full lg:w-1/2">
           <form onSubmit={handleSubmit}>
@@ -146,7 +145,8 @@ function MainPage() {
           </form>
         </section>
       </div>
-      {amountInTargetCurrency}
+      {amountInTargetCurrency} {currencyNames[sourceCurrency]} is equals to{" "}
+      {amountInTargetCurrency} {currencyNames[targetCurrency]}
     </div>
   );
 }
