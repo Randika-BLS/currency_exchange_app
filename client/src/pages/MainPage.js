@@ -152,7 +152,7 @@ function MainPage() {
 
       {!loading ? (
         <section className="lg:mx-32 text-xl font-bold mt-5">
-          {amountInTargetCurrency} {currencyNames[sourceCurrency]} is equals to{" "}
+          {amountInSourceCurrency} {currencyNames[sourceCurrency]} is equals to{" "}
           <span className="text-green-500 font-bold">
             {amountInTargetCurrency}
           </span>

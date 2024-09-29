@@ -24,7 +24,7 @@ app.get("/getAllCurrencies", async (req, res) => {
 
 //get the target amount
 app.get("/convert", async (req, res) => {
-  const { date, sourceCurrency, targetCurrency, AmountInSourceCurrency } =
+  const { date, sourceCurrency, targetCurrency, amountInSourceCurrency } =
     req.query;
 
   try {
@@ -39,7 +39,7 @@ https://openexchangerates.org/api/historical/${date}.json?app_id=cf7ca533de11494
     const targetRate = rates[targetCurrency];
 
     //final target val
-    const targetAmount = (targetRate / sourceRate) * AmountInSourceCurrency;
+    const targetAmount = (targetRate / sourceRate) * amountInSourceCurrency;
 
     return res.json(targetAmount.toFixed(2));
   } catch (err) {
