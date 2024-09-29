@@ -41,7 +41,7 @@ https://openexchangerates.org/api/historical/${date}.json?app_id=cf7ca533de11494
     //final target val
     const targetAmount = (targetRate / sourceRate) * AmountInSourceCurrency;
 
-    return res.json(targetAmount);
+    return res.json(targetAmount.toFixed(2));
   } catch (err) {
     console.error(err);
   }

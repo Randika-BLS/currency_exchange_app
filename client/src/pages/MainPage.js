@@ -8,6 +8,7 @@ function MainPage() {
   const [targetCurrency, setTargetCurrency] = useState("");
   const [amountInSourceCurrency, SetAmountInSourceCurrency] = useState(0);
   const [amountInTargetCurrency, SetAmountInTargetCurrency] = useState(0);
+  const [loading, setLoaading] = useState(true);
 
   const [currencyNames, setCurrencyNames] = useState([]);
 
@@ -25,7 +26,10 @@ function MainPage() {
       });
 
       //TODO:set the rest
-      SetAmountInSourceCurrency(response.data);
+      SetAmountInTargetCurrency(response.data);
+      setLoaading(false);
+
+      console.log(amountInSourceCurrency, amountInTargetCurrency);
     } catch (err) {
       console.error(err);
     }
@@ -145,8 +149,16 @@ function MainPage() {
           </form>
         </section>
       </div>
-      {amountInTargetCurrency} {currencyNames[sourceCurrency]} is equals to{" "}
-      {amountInTargetCurrency} {currencyNames[targetCurrency]}
+
+      {!loading ? (
+        <section className="lg:mx-32 text-xl font-bold mt-5">
+          {amountInTargetCurrency} {currencyNames[sourceCurrency]} is equals to{" "}
+          <span className="text-green-500 font-bold">
+            {amountInTargetCurrency}
+          </span>
+          in {currencyNames[targetCurrency]}
+        </section>
+      ) : null}
     </div>
   );
 }
